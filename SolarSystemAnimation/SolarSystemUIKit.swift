@@ -52,7 +52,7 @@ final class SolarSystemViewController: UIViewController {
         color: UIColor
     ) -> UIView {
         let bodyView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-        bodyView.center = CGPoint(x: parentView.bounds.midX + centerOffset, y: parentView.bounds.midY)
+        bodyView.center = CGPoint(x: parentView.bounds.midX, y: parentView.bounds.midY)
         bodyView.layer.cornerRadius = size / 2
         bodyView.backgroundColor = color
         parentView.addSubview(bodyView)
@@ -72,18 +72,18 @@ final class SolarSystemViewController: UIViewController {
         earthAngle += earthSpeed
         moonAngle += moonSpeed
 
-        let sunCenter = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
         let earthRadius: CGFloat = 120
         let moonRadius: CGFloat = 40
 
         // Earth position relative to sun
-        let earthX = sunCenter.x + cos(earthAngle) * earthRadius
-        let earthY = sunCenter.y + sin(earthAngle) * earthRadius
-        earthView.center = CGPoint(x: earthX, y: earthY)
+        let earthX = cos(earthAngle) * earthRadius
+        let earthY = sin(earthAngle) * earthRadius
+        
+        earthView.transform = CGAffineTransform(translationX: earthX, y: earthY)
 
         // Moon position relative to earth
-        let moonX = earthView.center.x + cos(moonAngle) * moonRadius
-        let moonY = earthView.center.y + sin(moonAngle) * moonRadius
-        moonView.center = CGPoint(x: moonX, y: moonY)
+        let moonX = cos(moonAngle) * moonRadius + earthX
+        let moonY = sin(moonAngle) * moonRadius + earthY
+        moonView.transform = CGAffineTransform(translationX: moonX, y: moonY)
     }
 }
