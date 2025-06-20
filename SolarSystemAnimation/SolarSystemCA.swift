@@ -61,7 +61,7 @@ final class SolarSystemCAViewController: UIViewController {
 
         let bodyView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
         bodyView.center = CGPoint(x: orbitLayer.bounds.midX + centerOffset, y: orbitLayer.bounds.midY)
-        bodyView.layer.cornerRadius = size / 2
+        bodyView.layer.cornerRadius = size / 3
         bodyView.backgroundColor = color
 
         orbitLayer.addSublayer(bodyView.layer)
@@ -73,6 +73,10 @@ final class SolarSystemCAViewController: UIViewController {
         addRotation(to: mercuryOrbitLayer, duration: 20, key: "mercuryOrbit")
         addRotation(to: earthOrbitLayer, duration: 10, key: "earthOrbit")
         addRotation(to: moonOrbitLayer, duration: 4, key: "moonOrbit")
+
+        addRotation(to: mercuryView.layer, duration: 10, key: "mercurySpin")
+        addRotation(to: earthView.layer, duration: 5, key: "earthSpin")
+        addRotation(to: moonView.layer, duration: 3, key: "moonSpin")
     }
     
     private func addRotation(to layer: CALayer, duration: CFTimeInterval, key: String) {

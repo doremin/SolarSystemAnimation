@@ -53,7 +53,7 @@ final class SolarSystemViewController: UIViewController {
     ) -> UIView {
         let bodyView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
         bodyView.center = CGPoint(x: parentView.bounds.midX, y: parentView.bounds.midY)
-        bodyView.layer.cornerRadius = size / 2
+        bodyView.layer.cornerRadius = size / 3
         bodyView.backgroundColor = color
         parentView.addSubview(bodyView)
         return bodyView
@@ -75,15 +75,20 @@ final class SolarSystemViewController: UIViewController {
         let earthRadius: CGFloat = 120
         let moonRadius: CGFloat = 40
 
-        // Earth position relative to sun
         let earthX = cos(earthAngle) * earthRadius
         let earthY = sin(earthAngle) * earthRadius
-        
-        earthView.transform = CGAffineTransform(translationX: earthX, y: earthY)
 
-        // Moon position relative to earth
-        let moonX = cos(moonAngle) * moonRadius + earthX
-        let moonY = sin(moonAngle) * moonRadius + earthY
-        moonView.transform = CGAffineTransform(translationX: moonX, y: moonY)
+        let earthTransform = CGAffineTransform.identity
+            .rotated(by: earthAngle)
+            .translatedBy(x: earthX, y: earthY)
+        earthView.transform = earthTransform
+
+        let moonX = cos(moonAngle) * moonRadius
+        let moonY = sin(moonAngle) * moonRadius
+
+        let moonTransform = earthTransform
+            .rotated(by: moonAngle)
+            .translatedBy(x: moonX, y: moonY)
+        moonView.transform = moonTransform
     }
 }
